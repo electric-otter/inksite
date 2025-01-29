@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InkSite Hosting Service</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
+        }
+        nav a {
+            color: #fff;
+            padding: 1rem;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #555;
+        }
+        .container {
+            padding: 2rem;
+        }
+        .card {
+            background-color: #fff;
+            padding: 1rem;
+            margin: 1rem;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .domain-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .domain-form input, .domain-form button {
+            width: 100%;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ccc;
+        }
+        .domain-form button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .domain-form button:hover {
+            background-color: #555;
+        }
+        .warning {
+            color: red;
+            text-align: center;
+            margin: 1rem 0;
+        }
+        .rules {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to InkSite Hosting Service</h1>
+    </header>
+    <nav>
+        <a href="#packages">Hosting Packages</a>
+        <a href="#domain">Free Domain Registration</a>
+        <a href="#filegator">File Management</a>
+    </nav>
+    <div class="container">
+        <section id="packages">
+            <h2>Our Hosting Packages</h2>
+            <div class="card">
+                <h3>Basic Package</h3>
+                <p>Perfect for small personal websites.</p>
+            </div>
+            <div class="card">
+                <h3>Pro Package</h3>
+                <p>Ideal for small businesses and blogs.</p>
+            </div>
+            <div class="card">
+                <h3>Premium Package</h3>
+                <p>Best for large businesses and high-traffic sites.</p>
+            </div>
+        </section>
+        <section id="domain">
+            <h2>Free Domain Registration with ICANN</h2>
+            <div class="card">
+                <p>As part of our hosting service, we offer free domain registration with ICANN. Get your unique web address and establish your online presence with ease.</p>
+            </div>
+            <div class="domain-form">
+                <form id="domainForm">
+                    <input type="text" id="domainName" placeholder="Enter Domain Name" required>
+                    <button type="submit">Register Domain</button>
+                </form>
+            </div>
+        </section>
+        <div class="warning">
+            <p>Please refrain from using your real IP address when creating a website. The repository for the website is public, and utilizing a real IP address may expose your information to others.</p>
+        </div>
+        <div class="rules">
+            <h3>Rules for Creating a Website</h3>
+            <ul>
+                <li>Ensure your content is original and does not infringe on copyright laws.</li>
+                <li>Provide clear and accurate information about your business or services.</li>
+                <li>Include a privacy policy and terms of service to inform users about data handling.</li>
+                <li>Make your website accessible to all users, including those with disabilities.</li>
+                <li>Use secure protocols (HTTPS) to protect user data.</li>
+                <li>Follow the laws and regulations of the United States, or the country you reside in, to ensure your website is compliant with local legal standards.</li>
+            </ul>
+        </div>
+        <section id="filegator">
+            <h2>Optional File Management with FileGator</h2>
+            <div class="card">
+                <p>If you choose not to host your website with us, you can still manage your files easily using FileGator. FileGator provides a simple and secure way to handle your website's files.</p>
+            </div>
+          <h1>Using our API keys</h1>
+          <h1>Use our actual public ICANN API key, 80897543</h1>
+            <div class="filegator-link">
+                <a href="https://filegator.io" target="_blank">Access FileGator</a>
+            </div>
+        </section>
+    </div>
+    <script>
+        document.getElementById('domainForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const domainName = document.getElementById('domainName').value;
+            const data = `Domain Name: ${domainName}\nWarning: Please refrain from using your real IP address when creating a website. The repository for the website is public, and utilizing a real IP address may expose your information to others.\n`;
+            const blob = new Blob([data], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'info.txt';
+            a.click();
+            window.URL.revokeObjectURL(url);
+
+            // Example API call with provided API key (replace with actual ICANN API endpoint and method)
+            fetch('https://api.icann.org/v1/domain/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer 80897543'
+                },
+                body: JSON.stringify({ domain: domainName })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Registration Response:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
