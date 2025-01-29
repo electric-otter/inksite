@@ -66,6 +66,24 @@
         .rules {
             margin-top: 1rem;
         }
+        .advanced-settings {
+            margin-top: 2rem;
+        }
+        .advanced-settings-form input, .advanced-settings-form button {
+            width: 100%;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ccc;
+        }
+        .advanced-settings-form button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .advanced-settings-form button:hover {
+            background-color: #555;
+        }
     </style>
 </head>
 <body>
@@ -76,6 +94,7 @@
         <a href="#packages">Hosting Packages</a>
         <a href="#domain">Free Domain Registration</a>
         <a href="#filegator">File Management</a>
+        <a href="#advanced-settings">Advanced Settings</a>
     </nav>
     <div class="container">
         <section id="packages">
@@ -119,13 +138,24 @@
                 <li>Follow the laws and regulations of the United States, or the country you reside in, to ensure your website is compliant with local legal standards.</li>
             </ul>
         </div>
+        <section id="advanced-settings" class="advanced-settings">
+            <h2>Advanced Settings</h2>
+            <div class="card">
+                <h3>DNS Records</h3>
+                <div class="advanced-settings-form">
+                    <form id="dnsForm">
+                        <input type="text" id="ipAddress" placeholder="Enter IP Address" required>
+                        <input type="email" id="email" placeholder="Enter Your Email" required>
+                        <button type="submit">Save DNS Settings</button>
+                    </form>
+                </div>
+            </div>
+        </section>
         <section id="filegator">
             <h2>Optional File Management with FileGator</h2>
             <div class="card">
                 <p>If you choose not to host your website with us, you can still manage your files easily using FileGator. FileGator provides a simple and secure way to handle your website's files.</p>
             </div>
-          <h1>Using our API keys</h1>
-          <h1>Use our actual public ICANN API key, 80897543</h1>
             <div class="filegator-link">
                 <a href="https://filegator.io" target="_blank">Access FileGator</a>
             </div>
@@ -135,7 +165,7 @@
         document.getElementById('domainForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const domainName = document.getElementById('domainName').value;
-            const data = `Domain Name: ${domainName}\nWarning: Please refrain from using your real IP address when creating a website. The repository for the website is public, and utilizing a real IP address may expose your information to others.\n`;
+            const data = `Domain Name: ${domainName}\nWarning: Please refrain from using your real IP address when creating a website. The repository for the website is public, and utilizing a real IP address may expose your information to others.`;
             const blob = new Blob([data], { type: 'text/plain' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -156,6 +186,38 @@
             .then(response => response.json())
             .then(data => {
                 console.log('Registration Response:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        document.getElementById('dnsForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const ipAddress = document.getElementById('ipAddress').value;
+            const email = document.getElementById('email').value;
+
+            // Save DNS settings - Replace with actual implementation
+            console.log('DNS Settings Saved:', {
+                ipAddress: ipAddress,
+                email: email
+            });
+
+            // Send verification email - Replace with actual email service
+            fetch('https://api.emailservice.com/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    to: email,
+                    subject: 'DNS Settings Verification',
+                    message: `Your DNS settings have been updated. IP Address: ${ipAddress}`
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Verification Email Sent:', data);
             })
             .catch(error => {
                 console.error('Error:', error);
